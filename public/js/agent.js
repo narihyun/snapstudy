@@ -268,7 +268,7 @@ export function recentDifficulties() {
 export function todayFacts() {
   const items = Object.values(state.items).filter((i) => i.language === state.profile?.target);
   const due = items.filter((i) => i.studied && i.dueAt != null && i.dueAt <= now()).map((i) => ({ id: i.id, form: i.form, metAgain: i.metAgain || 0 }));
-  const weak = items.filter((i) => i.decision === "practise" || Object.values(i.latest || {}).includes("incorrect")).map((i) => ({ id: i.id, form: i.form }));
+  const weak = items.filter((i) => i.decision === "practice" || Object.values(i.latest || {}).includes("incorrect")).map((i) => ({ id: i.id, form: i.form }));
   const ready = state.shots.filter((s) => s.status === "ready");
   const fresh = ready.filter((s) => s.lesson.items.some((id) => !state.items[id]?.studied)).map((s) => ({ id: s.id, title: s.title, savedDaysAgo: Math.floor((now() - s.takenAt) / DAY) }));
   const forgotten = ready.filter((s) => now() - s.takenAt > 10 * DAY && (!s.lastOpened || now() - s.lastOpened > 10 * DAY))
@@ -291,7 +291,7 @@ export async function planToday() {
 export function fallbackToday(f = todayFacts()) {
   const tasks = [];
   if (f.due.length) tasks.push({ type: "review", ref: "", title: `Review ${f.due.length} word${f.due.length > 1 ? "s" : ""} that are due`, why: "Recalling them now, just before you forget, makes them stick." });
-  if (f.weak.length) tasks.push({ type: "weak", ref: f.weak[0].id, title: `Practise “${f.weak[0].form}” again`, why: "You missed it last time." });
+  if (f.weak.length) tasks.push({ type: "weak", ref: f.weak[0].id, title: `Practice “${f.weak[0].form}” again`, why: "You missed it last time." });
   if (f.forgotten.length) tasks.push({ type: "revisit", ref: f.forgotten[0].id, title: `Revisit “${f.forgotten[0].title}”`, why: `You saved this ${f.forgotten[0].savedDaysAgo} days ago${f.forgotten[0].why_saved ? `: ${f.forgotten[0].why_saved}` : ""}` });
   if (f.fresh.length) tasks.push({ type: "lesson", ref: f.fresh[0].id, title: `Start “${f.fresh[0].title}”`, why: "New material from your screenshots." });
   return { greeting: "Here is what I suggest today.", tasks: tasks.slice(0, 4) };

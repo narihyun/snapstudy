@@ -138,7 +138,7 @@ function rowHTML(s) {
         <button class="text-button" data-act="regions" data-id="${s.id}">Choose text</button>
         <button class="text-button" data-act="source" data-id="${s.id}">View source</button>
         <button class="text-button" data-act="setAside" data-id="${s.id}">Set aside</button>
-        <button class="primary" data-act="practise" data-id="${s.id}">Practise</button>
+        <button class="primary" data-act="practice" data-id="${s.id}">practice</button>
       </div>
     </div></article>`;
 }
@@ -191,8 +191,8 @@ function practiceHTML() {
     ${ready.length ? `<div class="practice-list">${ready.map((x) => {
       const items = x.lesson.items.map((id) => state.items[id]).filter(Boolean);
       const st = items.map((i) => P.statusOf(i).key);
-      const note = st.some((k) => k === "due" || k === "needs-practice") ? "Ready for review" : st.every((k) => k === "new") ? "Not practised yet" : (() => { const d = Math.min(...items.filter((i) => i.dueAt).map((i) => i.dueAt)); return isFinite(d) ? `Next review ${fmtDate(d)}` : "Practised"; })();
-      return `<button data-act="practise" data-id="${x.id}"><span>${esc(x.title)}<small>${esc(items.map((i) => i.form).join(" · "))} — ${note}</small></span><span>Practise</span></button>`;
+      const note = st.some((k) => k === "due" || k === "needs-practice") ? "Ready for review" : st.every((k) => k === "new") ? "Not practiced yet" : (() => { const d = Math.min(...items.filter((i) => i.dueAt).map((i) => i.dueAt)); return isFinite(d) ? `Next review ${fmtDate(d)}` : "practiced"; })();
+      return `<button data-act="practice" data-id="${x.id}"><span>${esc(x.title)}<small>${esc(items.map((i) => i.form).join(" · "))} — ${note}</small></span><span>practice</span></button>`;
     }).join("")}</div>` : `<div class="empty-state">${ICON_IMG}<h2>No practice yet</h2><p>Add screenshots in the Library. The agent turns them into lessons.</p><button data-act="goLibrary">Open library</button></div>`}
   </div>`;
 }
@@ -242,7 +242,7 @@ function sessionHTML(s) {
       ${!done ? `<div class="row-actions center"><button class="primary" data-act="reveal">Turn card over</button><button class="text-button" data-act="skip">Skip for now</button></div>`
       : `<div class="flashcard-back">${teachHTML(item)}
           <p class="muted">Your own rating. It does not count as a checked answer.</p>
-          ${!st.decision ? `<div class="row-actions"><button data-act="decide" data-d="practise">Still learning</button><button data-act="decide" data-d="confident">I remembered</button></div>` : `<p role="status">${st.decision === "confident" ? "Remembered · your rating" : "Marked for more practice"}</p>`}
+          ${!st.decision ? `<div class="row-actions"><button data-act="decide" data-d="practice">Still learning</button><button data-act="decide" data-d="confident">I remembered</button></div>` : `<p role="status">${st.decision === "confident" ? "Remembered · your rating" : "Marked for more practice"}</p>`}
           <button class="primary" data-act="next">Next</button></div>`}
     </section>`;
   } else {
@@ -299,7 +299,7 @@ function feedbackHTML(e, st, item) {
     ${fb.explanation && (e.type !== "open" || fb.method !== "ai") ? `<p>${esc(fb.explanation)}</p>` : fb.method === "ai" && fb.explanation ? `<p>${esc(fb.explanation)}</p>` : ""}
     ${fb.schedule ? `<p class="schedule-note">${esc(fb.schedule)}</p>` : ""}
     <details class="learning-memory" ${fb.outcome !== "correct" ? "open" : ""}><summary>Meaning, use & source</summary>${teachHTML(item)}</details>
-    ${["uncertain", "revealed", "incorrect"].includes(fb.outcome) && !st.decision ? `<div class="self-review"><p>How do you feel about it? (optional)</p><div class="row-actions"><button data-act="decide" data-d="practise">I need more practice</button><button data-act="decide" data-d="confident">I get it now</button></div></div>` : st.decision ? `<p class="muted">Saved: ${st.decision === "confident" ? "you get it now" : "more practice"}.</p>` : ""}
+    ${["uncertain", "revealed", "incorrect"].includes(fb.outcome) && !st.decision ? `<div class="self-review"><p>How do you feel about it? (optional)</p><div class="row-actions"><button data-act="decide" data-d="practice">I need more practice</button><button data-act="decide" data-d="confident">I get it now</button></div></div>` : st.decision ? `<p class="muted">Saved: ${st.decision === "confident" ? "you get it now" : "more practice"}.</p>` : ""}
     <button class="primary" data-act="next">Next</button>
   </div>`;
 }
@@ -309,8 +309,8 @@ function recapHTML(s) {
   <div class="practice-card recap">
     <span class="eyebrow">Session complete · ${esc(s.title)}</span><h2>Your recap</h2>
     <p class="muted">${sum.answered} task${sum.answered === 1 ? "" : "s"} done. Answers with help are kept apart from recall without help.</p>
-    ${s.mode !== "flashcards" ? `<div class="recap-counts"><div><strong>${sum.independent}</strong><span>recalled without help</span></div><div><strong>${sum.again}</strong><span>to practise again</span></div><div><strong>${sum.items.length}</strong><span>words in this session</span></div></div>` : `<p class="recap-key">Card ratings are your own. Try Recall another day to check without help.</p>`}
-    <div class="row-actions">${sum.again ? `<button class="primary" data-act="again" data-ids="${sum.items.filter((x) => x.mistakes.length || x.unsure || x.card === "practise").map((x) => x.item.id).join(",")}">Practise these again</button>` : ""}<button data-act="closeRecap">Back to practice</button><button class="text-button" data-act="goProgress">See progress</button></div>
+    ${s.mode !== "flashcards" ? `<div class="recap-counts"><div><strong>${sum.independent}</strong><span>recalled without help</span></div><div><strong>${sum.again}</strong><span>to practice again</span></div><div><strong>${sum.items.length}</strong><span>words in this session</span></div></div>` : `<p class="recap-key">Card ratings are your own. Try Recall another day to check without help.</p>`}
+    <div class="row-actions">${sum.again ? `<button class="primary" data-act="again" data-ids="${sum.items.filter((x) => x.mistakes.length || x.unsure || x.card === "practice").map((x) => x.item.id).join(",")}">practice these again</button>` : ""}<button data-act="closeRecap">Back to practice</button><button class="text-button" data-act="goProgress">See progress</button></div>
     <div class="recap-items">${sum.items.map((x) => {
       const due = x.item.dueAt;
       return `<section class="recap-item"><h3 lang="${x.item.language}">${esc(x.item.form)} <span class="muted small">— ${esc(x.item.sense)}</span></h3>
@@ -347,7 +347,7 @@ function progressHTML() {
       <button data-act="progFilter" data-status="${progFilter.status === "review" ? "all" : "review"}" class="${progFilter.status === "review" ? "selected" : ""}"><strong>${revisit.length}</strong><span>To revisit</span></button>
     </div>
     <section class="batch-review"><div><h2>Revisit your words together</h2><p>One session for words that are due or that you missed, from all your screenshots. Recall comes first, without hints, then the tutor teaches.</p></div>
-      <div class="batch-start"><button class="primary" data-act="reviewAll" ${revisit.length ? "" : "disabled"}>Practise all to revisit (${revisit.length})</button><span>${revisit.length ? "Save & exit any time." : "Nothing is due right now."}</span></div></section>
+      <div class="batch-start"><button class="primary" data-act="reviewAll" ${revisit.length ? "" : "disabled"}>practice all to revisit (${revisit.length})</button><span>${revisit.length ? "Save & exit any time." : "Nothing is due right now."}</span></div></section>
     <details class="progress-key"><summary>What do these mean?</summary><p>A review date moves forward only when you recall a word without help (no hints, no answer shown, first try). Then the gap grows: 3, 7, 14, 30, 60 days. A mistake brings it back the next day. “Remembering well” means at least two such reviews in a row. It is not a claim of permanent mastery.</p></details>
     <div class="progress-filters">
       <label>Find a word<input type="search" data-pfilter="q" value="${esc(progFilter.q)}" placeholder="Search words or meanings"></label>
@@ -361,7 +361,7 @@ function progressHTML() {
         <p class="progress-reason">${esc(s.reason)}</p>
         <dl class="word-statistics"><div><dt>Practice tasks</dt><dd>${i.stats.tasks}</dd></div><div><dt>Recall without help</dt><dd>${i.stats.indep[1] ? `${i.stats.indep[0]} / ${i.stats.indep[1]} correct` : "Not checked yet"}</dd></div><div><dt>AI writing checks</dt><dd>${i.stats.writing[1] ? `${i.stats.writing[0]} / ${i.stats.writing[1]} accepted` : "Not yet"}</dd></div></dl>
         <div class="progress-review-row"><p><strong>${i.studied ? (i.dueAt <= now() ? "Review due" : "Next check without help") : "First practice"}</strong><span>${i.studied ? fmtDate(i.dueAt) : "Whenever you are ready"}</span></p>
-          <span class="row-actions tight"><button class="text-button" data-act="source" data-id="${i.shotId}">View source</button><button class="${["due", "needs-practice"].includes(s.key) ? "primary" : ""}" data-act="practiseWord" data-id="${i.id}">Practise</button></span></div>
+          <span class="row-actions tight"><button class="text-button" data-act="source" data-id="${i.shotId}">View source</button><button class="${["due", "needs-practice"].includes(s.key) ? "primary" : ""}" data-act="practiceWord" data-id="${i.id}">practice</button></span></div>
       </article>`;
     }).join("")}</div>
   </section>`;
@@ -546,7 +546,7 @@ $("#view").addEventListener("click", async (e) => {
     case "clearFilters": filters = { q: "", topic: "", due: false }; return render();
     case "source": return openSource(id);
     case "regions": return openRegions(shotById(id));
-    case "practise": return openModes(shotById(id));
+    case "practice": return openModes(shotById(id));
     case "studyAnyway": studyAnyway(shotById(id)); libTab = "working"; return render();
     case "setAside": setAside(shotById(id)); return render();
     case "retry": retry(shotById(id)); return render();
@@ -556,8 +556,8 @@ $("#view").addEventListener("click", async (e) => {
     case "recap": showRecap = true; return render();
     case "closeRecap": showRecap = false; return render();
     case "reviewAll": { const ids = P.toRevisit().map((i) => i.id).slice(0, 12); if (ids.length) begin({ mode: "mixed", itemIds: ids, title: "Review", review: true }); return; }
-    case "practiseWord": { const i = state.items[id]; return begin({ mode: "mixed", itemIds: [id], title: i.form, shotId: i.shotId, review: i.studied }); }
-    case "again": return begin({ mode: "mixed", itemIds: t.dataset.ids.split(","), title: "Practise again", review: true });
+    case "practiceWord": { const i = state.items[id]; return begin({ mode: "mixed", itemIds: [id], title: i.form, shotId: i.shotId, review: i.studied }); }
+    case "again": return begin({ mode: "mixed", itemIds: t.dataset.ids.split(","), title: "practice again", review: true });
     case "task": return runTask(t.dataset.type, t.dataset.ref);
     case "progFilter": progFilter.status = t.dataset.status; return render();
     // session
