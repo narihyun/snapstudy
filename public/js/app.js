@@ -138,7 +138,7 @@ function rowHTML(s) {
         <button class="text-button" data-act="regions" data-id="${s.id}">Choose text</button>
         <button class="text-button" data-act="source" data-id="${s.id}">View source</button>
         <button class="text-button" data-act="setAside" data-id="${s.id}">Set aside</button>
-        <button class="primary" data-act="practice" data-id="${s.id}">practice</button>
+        <button class="primary" data-act="practice" data-id="${s.id}">Practice</button>
       </div>
     </div></article>`;
 }
