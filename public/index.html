@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SnapStudy</title>
+  <meta name="description" content="An AI study agent that turns the language screenshots buried in your photo library into short lessons, and brings them back before you forget.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232454c5' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app-shell">
+  <header class="topbar">
+    <a class="brand" href="#library" data-view="library">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg>
+      <span>SnapStudy</span>
+    </a>
+    <nav aria-label="Main navigation">
+      <button data-view="library">Library</button>
+      <button data-view="practice">Practice</button>
+      <button data-view="progress">Progress</button>
+    </nav>
+    <button class="profile-chip" id="profileChip" aria-label="Learning settings"></button>
+    <button class="icon-button" id="settingsBtn" aria-label="Learning settings">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg>
+    </button>
+  </header>
+
+  <main id="main">
+    <div class="error" id="banner" role="alert" hidden><span id="bannerText"></span><button class="icon-button" id="bannerClose" aria-label="Dismiss">✕</button></div>
+    <div id="view"></div>
+  </main>
+</div>
+
+<div class="drag-shade" id="dragShade" hidden><div>Drop screenshots or a whole folder anywhere</div></div>
+<input type="file" id="files" multiple accept="image/*" class="sr-only" aria-label="Choose screenshots">
+<input type="file" id="folder" webkitdirectory multiple class="sr-only" aria-label="Choose a folder of screenshots">
+
+<!-- Learning settings -->
+<dialog id="settingsDialog" class="panel settings-panel" aria-labelledby="settingsTitle">
+  <form method="dialog" id="settingsForm" class="settings-form">
+    <div class="dialog-head"><h2 id="settingsTitle">Learning settings</h2><button type="button" class="icon-button" data-close aria-label="Close">✕</button></div>
+    <p class="muted" id="settingsLead">The agent uses these to decide which screenshots matter, what to teach you, and how to explain it.</p>
+    <label>I am learning<select name="target" id="sTarget"></select></label>
+    <label>My level (roughly)<select name="level" id="sLevel"></select></label>
+    <label>Explain things to me in<select name="explain" id="sExplain"></select></label>
+    <label>My goal<textarea name="goal" id="sGoal" rows="2" maxlength="240" minlength="3" required placeholder="e.g. chat with friends, pass TOEIC, order food while travelling"></textarea></label>
+    <p class="connection-note" id="sNote" hidden></p>
+    <button class="primary" id="sSave">Save settings</button>
+    <details class="data-tools" id="dataTools">
+      <summary>Your data in this browser</summary>
+      <p class="muted">There is no account. Everything stays in this browser on this device. Download a backup to move it to another browser.</p>
+      <div class="row-actions">
+        <button type="button" id="exportBtn">Download backup</button>
+        <label class="button-like">Load backup<input type="file" id="importInput" accept="application/json" class="sr-only"></label>
+        <button type="button" id="jumpBtn" title="For demos: see what happens when reviews come due">Demo: move time 3 days ahead</button>
+        <button type="button" id="resetBtn" class="danger">Delete everything</button>
+      </div>
+      <p class="muted" id="clockNote"></p>
+    </details>
+  </form>
+</dialog>
+
+<!-- Choose how to practise -->
+<dialog id="modeDialog" class="panel activity-panel" aria-labelledby="modeTitle">
+  <div class="dialog-head"><h2 id="modeTitle">Choose how to practise</h2><button type="button" class="icon-button" data-close aria-label="Close">✕</button></div>
+  <div id="modeBody"></div>
+</dialog>
+
+<!-- Choose text regions -->
+<dialog id="regionDialog" class="panel review-panel" aria-labelledby="regionTitle">
+  <div class="dialog-head"><h2 id="regionTitle">Choose what to learn</h2><button type="button" class="icon-button" data-close aria-label="Close">✕</button></div>
+  <div id="regionBody"></div>
+</dialog>
+
+<!-- Source -->
+<dialog id="sourceDialog" class="panel source-panel" aria-labelledby="sourceTitle">
+  <div class="dialog-head"><h2 id="sourceTitle">Source</h2><button type="button" class="icon-button" data-close aria-label="Close">✕</button></div>
+  <div id="sourceBody"></div>
+</dialog>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

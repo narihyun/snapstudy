@@ -1,0 +1,98 @@
+{
+ "roll": [
+  {
+   "file": "news-markets.png",
+   "takenAt": "2026-09-08T21:02:00"
+  },
+  {
+   "file": "tweet-econ.png",
+   "takenAt": "2026-09-08T21:06:00"
+  },
+  {
+   "file": "span-restaurant.png",
+   "takenAt": "2026-09-16T10:04:00"
+  },
+  {
+   "file": "span-ser-estar.png",
+   "takenAt": "2026-09-16T10:31:00"
+  },
+  {
+   "file": "toeic-words.png",
+   "takenAt": "2026-09-22T08:15:00"
+  },
+  {
+   "file": "news-trade.png",
+   "takenAt": "2026-09-25T22:40:00"
+  },
+  {
+   "file": "span-exercise.png",
+   "takenAt": "2026-10-01T19:20:00"
+  },
+  {
+   "file": "podcast-idioms.png",
+   "takenAt": "2026-10-03T07:48:00"
+  },
+  {
+   "file": "receipt.png",
+   "takenAt": "2026-09-09T18:43:00"
+  },
+  {
+   "file": "chat-dinner.png",
+   "takenAt": "2026-09-11T16:12:00"
+  },
+  {
+   "file": "map.png",
+   "takenAt": "2026-09-12T08:58:00"
+  },
+  {
+   "file": "ticket.png",
+   "takenAt": "2026-09-13T23:10:00"
+  },
+  {
+   "file": "shoes.png",
+   "takenAt": "2026-09-15T13:31:00"
+  },
+  {
+   "file": "recipe.png",
+   "takenAt": "2026-09-18T20:05:00"
+  },
+  {
+   "file": "boarding.png",
+   "takenAt": "2026-09-20T06:50:00"
+  },
+  {
+   "file": "meme.png",
+   "takenAt": "2026-09-21T01:14:00"
+  },
+  {
+   "file": "weather.png",
+   "takenAt": "2026-09-24T07:30:00"
+  },
+  {
+   "file": "calendar.png",
+   "takenAt": "2026-09-29T11:02:00"
+  },
+  {
+   "file": "chat-mom.png",
+   "takenAt": "2026-10-02T21:47:00"
+  },
+  {
+   "file": "transfer.png",
+   "takenAt": "2026-10-04T20:31:00"
+  }
+ ],
+ "newer": [
+  {
+   "file": "news-rates.png",
+   "takenAt": "2026-10-06T08:05:00"
+  },
+  {
+   "file": "span-ordering.png",
+   "takenAt": "2026-10-06T10:02:00"
+  },
+  {
+   "file": "chat-anna.png",
+   "takenAt": "2026-10-06T10:15:00"
+  }
+ ]
+}
